@@ -1,0 +1,50 @@
+/*if(operator == '+'){
+        value = operate(add,firstValue,secondValue);
+        display.textContent = value;
+        console.log(value);
+    }
+    if(operator == '-'){
+        value = operate(subtract,firstValue,secondValue);
+        display.textContent = value;
+        console.log(value);
+    }
+    if(operator == '*'){
+        value = operate(multiply,firstValue,secondValue);
+        display.textContent = value;
+        console.log(value);
+    }
+    let cra;
+    let clear;
+
+    function cray(){
+       console.log("cray");
+    };
+    function empty(){
+        return display.textContent="";
+    };
+
+    if(operator == '/'){
+        if(secondValue == 0){
+            setTimeout(cray(),5000);
+            //clear=setTimeout(empty(),2000);
+        }
+        else{
+        value = operate(divide,firstValue,secondValue);
+        display.textContent = value;
+        console.log(value);
+    }
+}
+ */   
+
+
+função plusMinus eventListener
+/* else if(splity[2] === ''){
+        if(Number(firstValue)>0){
+            value = display.textContent = '-'+firstValue;
+        }
+        else{
+            firstValue= Math.abs(firstValue);
+            value = display.textContent = firstValue.toString();
+        }
+        operatorClickCount=0;
+    }*/

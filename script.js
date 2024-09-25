@@ -24,9 +24,11 @@ function operate(operator,firstNumber,secondNumber){
 let display = document.querySelector("p");
 let digitsBtns = document.querySelectorAll("button.digit");
 let operatorBtns = document.querySelectorAll("button.operator");
-let plusMinus = document.querySelector(".plusMinus");
+let plusMinus = document.querySelector("#plusMinus");
 let c = document.querySelector("#c");
 let dot = document.querySelector("#dot");
+let equalBtn = document.querySelector("#equal");
+
 
 //transformar querySelectorAll em arrays
 let digits = Array.from(digitsBtns);
@@ -55,6 +57,7 @@ dot.addEventListener("click",()=>{
     }
 });
 
+
 plusMinus.addEventListener("click",()=>{
     splity = value.toString().split(" ");
     let firstValue=splity[0];
@@ -62,15 +65,17 @@ plusMinus.addEventListener("click",()=>{
     
     
     if(splity.length>1){
-        value = display.textContent =firstValue +' '+operator+' '+(-secondValue);
-    }
-    else if(splity[2] === ''){
-        if(Number(firstValue)>0){
-            value = display.textContent = '-'+firstValue;
+        if(splity[2] === ''){
+            if(Number(firstValue)>0){
+                value = display.textContent = '-'+firstValue;
+            }
+            else{
+                firstValue= Math.abs(firstValue);
+                value = display.textContent = firstValue.toString();
+            }
         }
         else{
-            firstValue= Math.abs(firstValue);
-            value = display.textContent = firstValue.toString();
+        value = display.textContent =firstValue +' '+operator+' '+(-secondValue);
         }
         operatorClickCount=0;
     }
@@ -84,7 +89,7 @@ plusMinus.addEventListener("click",()=>{
         }
     }
 });
-let valueTwo;
+
 //função que apenas permite usar um operador caso exista um valor inicial e não permite duplicar o operador
 operators.forEach(button => button.addEventListener("click", ()=>{
     if(value && operatorClickCount==0){
@@ -97,9 +102,45 @@ operators.forEach(button => button.addEventListener("click", ()=>{
 
 
 
-let equalBtn = document.querySelector("#equal");
-let splitByOperators;
+// sleep time expects milliseconds~
 
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+function checkOperator(operator,firstValue,secondValue){
+    switch(operator){
+        case '+':
+            value = operate(add,firstValue,secondValue);
+            display.textContent = value;
+            break;
+        case '-':
+            value = operate(subtract,firstValue,secondValue);
+            display.textContent = value;
+            break;
+        case '*':
+            value = operate(multiply,firstValue,secondValue);
+            display.textContent = value;
+            break;
+        case '/':
+            if(secondValue == 0){
+                display.textContent="Bad math :/";
+                sleep(2000).then(() => {
+                    display.textContent="";
+                });
+            }
+            else{
+            value = operate(divide,firstValue,secondValue);
+            display.textContent = value;
+            }
+            break;
+        default:
+            display.textContent="";
+            
+    }
+}
+
+let splitByOperators;
 equalBtn.addEventListener("click",()=>{
     splitByOperators = value.split(" ");
     let firstValue = splitByOperators[0];
@@ -113,49 +154,10 @@ equalBtn.addEventListener("click",()=>{
         secondValue = secondValue.replace("/","");
     }
 
-    
+    checkOperator(operator,firstValue,secondValue);
 
-    if(operator == '+'){
-        value = operate(add,firstValue,secondValue);
-        display.textContent = value;
-        console.log(value);
-    }
-    if(operator == '-'){
-        value = operate(subtract,firstValue,secondValue);
-        display.textContent = value;
-        console.log(value);
-    }
-    if(operator == '*'){
-        value = operate(multiply,firstValue,secondValue);
-        display.textContent = value;
-        console.log(value);
-    }
-    let cra;
-    let clear;
-
-    function cray(){
-       console.log("cray");
-    };
-    function empty(){
-        return display.textContent="";
-    };
-
-    if(operator == '/'){
-        if(secondValue == 0){
-            setTimeout(cray(),5000);
-            //clear=setTimeout(empty(),2000);
-        }
-        else{
-        value = operate(divide,firstValue,secondValue);
-        display.textContent = value;
-        console.log(value);
-    }
-}
-    
     operatorClickCount=0;
 
 });
 
 
-//clean "=" event listener 
-//ver divisão por 0
